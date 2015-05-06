@@ -9,7 +9,7 @@ using NuGet;
 
 namespace Microsoft.Framework.PackageManager
 {
-    internal class UninstallCommand
+    public class UninstallCommand
     {
         private readonly IAppCommandsRepository _commandsRepo;
         private readonly Reports _reports;

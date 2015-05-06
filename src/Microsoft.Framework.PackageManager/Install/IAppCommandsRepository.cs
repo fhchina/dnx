@@ -6,7 +6,7 @@ using NuGet;
 
 namespace Microsoft.Framework.PackageManager
 {
-    internal interface IAppCommandsRepository
+    public interface IAppCommandsRepository
     {
         IPackagePathResolver PathResolver { get; }
 

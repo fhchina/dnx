@@ -10,7 +10,7 @@ using NuGet;
 
 namespace Microsoft.Framework.PackageManager
 {
-    internal class AppCommandsFolderRepository : IAppCommandsRepository
+    public class AppCommandsFolderRepository : IAppCommandsRepository
     {
         private readonly NuGet.IFileSystem _commandsFolder;
         private readonly DefaultPackagePathResolver _pathResolver;

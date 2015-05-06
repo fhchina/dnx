@@ -4,6 +4,5 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Microsoft.Framework.PackageManager.FunctionalTests")]
 [assembly: InternalsVisibleTo("Microsoft.Framework.PackageManager.Tests")]
 [assembly: AssemblyMetadata("Serviceable", "True")]
