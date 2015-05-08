@@ -7,10 +7,10 @@ namespace Microsoft.Framework.Runtime.Json
     {
         public const int CarriageReturn = 0x0D;
         public const int LineFeed = 0x0A;
-        public const int SP = 0x20;
+        public const int Space = 0x20;
         public const int HorizontalTab = 0x09;
         public const int FormFeed = 0x0C;
-        public const int BACKSPACE = 0x08;
+        public const int Backspace = 0x08;
 
         public const string ValueNull = "null";
         public const string ValueTrue = "true";

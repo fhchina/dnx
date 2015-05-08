@@ -218,7 +218,7 @@ namespace Microsoft.Framework.Runtime.Json
                     else if (next == 'b')
                     {
                         // '\b' backspace
-                        buf.Append((char)JsonConstants.BACKSPACE);
+                        buf.Append((char)JsonConstants.Backspace);
                     }
                     else if (next == 'f')
                     {
@@ -306,7 +306,7 @@ namespace Microsoft.Framework.Runtime.Json
 
         private static bool IsWhitespace(int value)
         {
-            return value == JsonConstants.SP || value == JsonConstants.HorizontalTab || value == JsonConstants.CarriageReturn;
+            return value == JsonConstants.Space || value == JsonConstants.HorizontalTab || value == JsonConstants.CarriageReturn;
         }
     }
 }
