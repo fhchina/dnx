@@ -94,7 +94,9 @@ namespace Microsoft.Framework.Runtime.Json
             }
             else
             {
-                throw new JsonDeserializerException(string.Format("Illegal character {0:X4}.", first), _line, _column);
+                throw new JsonDeserializerException(
+                    JsonDeserializerResource.Format_IllegalCharacter(first),
+                    _token);
             }
 
             // JsonToken is a value type
@@ -165,7 +167,7 @@ namespace Microsoft.Framework.Runtime.Json
             for (int i = 1; i < literal.Length; ++i)
             {
                 var next = _reader.Peek();
-                if (next != (int)literal[i])
+                if (next != literal[i])
                 {
                     throw new JsonDeserializerException(
                         JsonDeserializerResource.Format_UnrecognizedLiteral(literal),
@@ -180,10 +182,10 @@ namespace Microsoft.Framework.Runtime.Json
             var tail = _reader.Peek();
             if (tail != '}' &&
                 tail != ']' &&
-                tail != JsonConstants.CarriageReturn &&
-                tail != JsonConstants.LineFeed &&
                 tail != ',' &&
                 tail != -1 &&
+                tail != JsonConstants.CarriageReturn &&
+                tail != JsonConstants.LineFeed &&
                 !IsWhitespace(tail))
             {
                 throw new JsonDeserializerException(
@@ -250,7 +252,10 @@ namespace Microsoft.Framework.Runtime.Json
                             next = ReadNextChar();
                             if (next == -1)
                             {
-                                throw new JsonDeserializerException(JsonDeserializerResource.JSON_OpenString, unicodeLine, unicodeColumn);
+                                throw new JsonDeserializerException(
+                                    JsonDeserializerResource.JSON_InvalidEnd,
+                                    unicodeLine,
+                                    unicodeColumn);
                             }
                             else
                             {
@@ -265,12 +270,19 @@ namespace Microsoft.Framework.Runtime.Json
                         }
                         catch (FormatException ex)
                         {
-                            throw new JsonDeserializerException("Invalid Unicode format [" + unicodesBuf.ToString() + "]", ex, unicodeLine, unicodeColumn);
+                            throw new JsonDeserializerException(
+                                JsonDeserializerResource.Format_InvalidUnicode(unicodesBuf.ToString()),
+                                ex,
+                                unicodeLine,
+                                unicodeColumn);
                         }
                     }
                     else
                     {
-                        throw new JsonDeserializerException(JsonDeserializerResource.JSON_BadEscape, _line, _column);
+                        throw new JsonDeserializerException(
+                            JsonDeserializerResource.Format_InvalidSyntaxNotExpected("charactor escape", "\\" + next),
+                            _line,
+                            _column);
                     }
 
                     escaped = false;

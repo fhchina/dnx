@@ -28,7 +28,9 @@ namespace Microsoft.Framework.Runtime.Json
             var nextToken = buffer.Read();
             if (nextToken.Type != JsonTokenType.EOL)
             {
-                throw new JsonDeserializerException("Failed to continue deserializing. Additional token " + nextToken.Value, nextToken);
+                throw new JsonDeserializerException(
+                    JsonDeserializerResource.Format_UnfinishedJSON(nextToken.Value),
+                    nextToken);
             }
 
             return result;
@@ -90,7 +92,9 @@ namespace Microsoft.Framework.Runtime.Json
                 next = buffer.Read();
                 if (next.Type == JsonTokenType.EOL)
                 {
-                    throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidArrayEnd, next);
+                    throw new JsonDeserializerException(
+                        JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON array", ']', ','),
+                        next);
                 }
                 else if (next.Type == JsonTokenType.RightSquareBracket)
                 {
@@ -98,7 +102,9 @@ namespace Microsoft.Framework.Runtime.Json
                 }
                 else if (next.Type != JsonTokenType.Comma)
                 {
-                    throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidArrayExpectComma, next);
+                    throw new JsonDeserializerException(
+                        JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON array", ','),
+                        next);
                 }
             }
 
@@ -115,12 +121,16 @@ namespace Microsoft.Framework.Runtime.Json
                 var next = buffer.Read();
                 if (next.Type == JsonTokenType.EOL)
                 {
-                    throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidObject, next);
+                    throw new JsonDeserializerException(
+                        JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object", '}'),
+                        next);
                 }
 
                 if (next.Type == JsonTokenType.Colon)
                 {
-                    throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidMemberName, next);
+                    throw new JsonDeserializerException(
+                        JsonDeserializerResource.Format_InvalidSyntaxNotExpected("JSON object", ':'),
+                        next);
                 }
                 else if (next.Type == JsonTokenType.RightCurlyBracket)
                 {
@@ -130,19 +140,25 @@ namespace Microsoft.Framework.Runtime.Json
                 {
                     if (next.Type != JsonTokenType.String)
                     {
-                        throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidMemberName, next);
+                        throw new JsonDeserializerException(
+                            JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object member name", "JSON string"),
+                            next);
                     }
 
                     var memberName = next.Value;
                     if (dictionary.ContainsKey(memberName))
                     {
-                        throw new JsonDeserializerException(JsonDeserializerResource.Format_DuplicateObjectMemberName(memberName), next);
+                        throw new JsonDeserializerException(
+                            JsonDeserializerResource.Format_DuplicateObjectMemberName(memberName),
+                            next);
                     }
 
                     next = buffer.Read();
                     if (next.Type != JsonTokenType.Colon)
                     {
-                        throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidObject, next);
+                        throw new JsonDeserializerException(
+                            JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object", ':'),
+                            next);
                     }
 
                     dictionary[memberName] = DeserializeInternal(buffer.Read(), buffer);
@@ -154,7 +170,9 @@ namespace Microsoft.Framework.Runtime.Json
                     }
                     else if (next.Type != JsonTokenType.Comma)
                     {
-                        throw new JsonDeserializerException(JsonDeserializerResource.JSON_InvalidObject, next);
+                        throw new JsonDeserializerException(
+                            JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object", ','),
+                            next);
                     }
                 }
             }

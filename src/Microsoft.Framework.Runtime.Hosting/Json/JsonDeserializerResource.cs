@@ -5,14 +5,22 @@ namespace Microsoft.Framework.Runtime.Json
 {
     internal class JsonDeserializerResource
     {
+        internal static string Format_IllegalCharacter(int value)
+        {
+            return string.Format("Illegal character {0} {0:X4}.", (char)value, value);
+        }
+
         internal static string Format_IllegalTrailingCharacterAfterLiteral(int value, string literal)
         {
-            return string.Format("Illegal character {0} ({1:X4}) trails the literal name {2}", (char)value, value, literal);
+            return string.Format("Illegal character {0} ({1:X4}) after the literal name {2}",
+                (char)value,
+                value,
+                literal);
         }
 
         internal static string Format_UnrecognizedLiteral(string literal)
         {
-            return string.Format("Unrecognized json literal. {0} is expected.", literal);
+            return string.Format("Invalid JSON literal. {0} is not legal JSON literal.", literal);
         }
 
         internal static string Format_UnexpectedToken(string tokenValue, JsonTokenType type)
@@ -22,7 +30,7 @@ namespace Microsoft.Framework.Runtime.Json
 
         internal static string Format_DuplicateObjectMemberName(string memberName)
         {
-            return string.Format("Duplicate member name {0}", memberName);
+            return Format_InvalidSyntax("JSON object", string.Format("Duplicate member name {0}", memberName));
         }
 
         internal static string Format_InvalidFloatNumberFormat(string raw)
@@ -35,54 +43,54 @@ namespace Microsoft.Framework.Runtime.Json
             return string.Format("Float number overflow: {0}.", raw);
         }
 
-        internal static string JSON_BadEscape
+        internal static string Format_InvalidSyntax(string syntaxName, string issue)
         {
-            get { return "Unrecognized escape sequence."; }
+            return string.Format("Invalid {0} syntax. {1}.");
         }
 
-        internal static string JSON_DepthLimitExceeded
+        internal static string Format_InvalidSyntaxNotExpected(string syntaxName, char unexpected)
         {
-            get { return "RecursionLimit exceeded."; }
+            return string.Format("Invalid {0} syntax. Unexpected '{1}'.", syntaxName, unexpected);
         }
 
-        internal static string JSON_ExpectedOpenBrace
+        internal static string Format_InvalidSyntaxNotExpected(string syntaxName, string unexpected)
         {
-            get { return "Invalid object passed in, '{' expected."; }
+            return string.Format("Invalid {0} syntax. Unexpected {1}.", syntaxName, unexpected);
         }
 
-        internal static string JSON_InvalidArrayEnd
+        internal static string Format_InvalidSyntaxExpectation(string syntaxName, char expectation)
         {
-            get { return "Invalid array passed in, ']' expected."; }
+            return string.Format("Invalid {0} syntax. Expected '{1}'.", syntaxName, expectation);
         }
 
-        internal static string JSON_InvalidArrayExpectComma
+        internal static string Format_InvalidSyntaxExpectation(string syntaxName, string expectation)
         {
-            get { return "Invalid array passed in, ',' expected."; }
+            return string.Format("Invalid {0} syntax. Expected {1}.", syntaxName, expectation);
         }
 
-        internal static string JSON_InvalidArrayExtraComma
+        internal static string Format_InvalidSyntaxExpectation(string syntaxName, char expectation1, char expectation2)
         {
-            get { return "Invalid array passed in, extra trailing ','."; }
+            return string.Format("Invalid {0} syntax. Expected '{1}' or '{2}'.", syntaxName, expectation1, expectation2);
         }
 
-        internal static string JSON_InvalidArrayStart
+        internal static string Format_InvalidUnicode(string unicode)
         {
-            get { return "Invalid array passed in, '[' expected."; }
+            return string.Format("Invalid Unicode [{0}]", unicode);
         }
 
-        internal static string JSON_InvalidMemberName
+        internal static string Format_UnfinishedJSON(string nextTokenValue)
         {
-            get { return "Invalid object passed in, member name expected."; }
-        }
-
-        internal static string JSON_InvalidObject
-        {
-            get { return "Invalid object passed in, ':' or '}' expected."; }
+            return string.Format("Invalid JSON end. Unprocessed token {0}.", nextTokenValue);
         }
 
         internal static string JSON_OpenString
         {
-            get { return "Invalid open string, '\"' is expected."; }
+            get { return Format_InvalidSyntaxExpectation("JSON string", '\"'); }
+        }
+
+        internal static string JSON_InvalidEnd
+        {
+            get { return "Invalid JSON end unexpectedly."; }
         }
     }
 }
