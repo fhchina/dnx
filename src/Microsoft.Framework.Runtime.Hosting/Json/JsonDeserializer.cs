@@ -17,11 +17,7 @@ namespace Microsoft.Framework.Runtime.Json
             }
 
             var buffer = new JsonBuffer(reader);
-            return Deserialize(buffer);
-        }
 
-        private static JsonValue Deserialize(JsonBuffer buffer)
-        {
             var result = DeserializeInternal(buffer.Read(), buffer);
 
             // There are still unprocessed char. The parsing is not finished. Error happened.
