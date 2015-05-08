@@ -166,6 +166,28 @@ namespace Microsoft.Framework.Runtime.Tests
             }
         }
 
+        [Theory]
+        [InlineData("{[}")]
+        [InlineData("{[}]")]
+        [InlineData("{}}")]
+        [InlineData("{{}")]
+        [InlineData("[[]")]
+        [InlineData("[]]")]
+        [InlineData("{\"}")]
+        [InlineData("}")]
+        [InlineData("]")]
+        [InlineData("nosuchthing")]
+        public void DeserializeIncorrectJSON(string content)
+        {
+            using (var reader = GetReader(content))
+            {
+                Assert.Throws<JsonDeserializerException>(() =>
+                {
+                    JsonDeserializer.Deserialize(reader);
+                });
+            }
+        }
+
         [Fact]
         public void DeserializeLockFile()
         {
