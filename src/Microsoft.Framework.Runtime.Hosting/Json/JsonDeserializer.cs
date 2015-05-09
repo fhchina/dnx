@@ -167,7 +167,7 @@ namespace Microsoft.Framework.Runtime.Json
                     else if (next.Type != JsonTokenType.Comma)
                     {
                         throw new JsonDeserializerException(
-                            JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object", ','),
+                            JsonDeserializerResource.Format_InvalidSyntaxExpectation("JSON object", ',', '}'),
                             next);
                     }
                 }
