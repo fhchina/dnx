@@ -20,7 +20,7 @@ namespace Microsoft.Framework.Runtime.Json
             _array = array;
         }
 
-        public int Count
+        public int Length
         {
             get { return _array.Length; }
         }

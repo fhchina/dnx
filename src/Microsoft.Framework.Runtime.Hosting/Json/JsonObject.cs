@@ -93,9 +93,9 @@ namespace Microsoft.Framework.Runtime.Json
                     return null;
                 }
 
-                var result = new string[list.Count];
+                var result = new string[list.Length];
 
-                for (int i = 0; i < list.Count; ++i)
+                for (int i = 0; i < list.Length; ++i)
                 {
                     var jsonString = list[i] as JsonString;
                     result[i] = jsonString?.ToString();

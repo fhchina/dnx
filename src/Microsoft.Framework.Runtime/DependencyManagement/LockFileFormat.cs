@@ -188,7 +188,7 @@ namespace Microsoft.Framework.Runtime.DependencyManagement
             }
 
             var items = new List<TItem>();
-            for (int i = 0; i < jarray.Count; ++i)
+            for (int i = 0; i < jarray.Length; ++i)
             {
                 items.Add(readItem(jarray[i]));
             }
