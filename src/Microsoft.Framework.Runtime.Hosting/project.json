@@ -22,10 +22,10 @@
         },
         "dnxcore50": {
             "dependencies": {
-                "System.Xml.XDocument": "4.0.10-beta-*",
-                "System.Runtime.Loader": "4.0.0-beta-*",
                 "System.Reflection": "4.0.10-beta-*",
-                "System.Reflection.Extensions": "4.0.0-beta-*"
+                "System.Reflection.Extensions": "4.0.0-beta-*",
+                "System.Runtime.Loader": "4.0.0-beta-*",
+                "System.Xml.XDocument": "4.0.10-beta-*"                
             }
         }
     },
