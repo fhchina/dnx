@@ -173,7 +173,7 @@ namespace Microsoft.Framework.Runtime
             if (rawProject == null)
             {
                 throw FileFormatException.Create(
-                    "The json file can't be deserialized to a Json object.",
+                    "The JSON file can't be deserialized to a Json object.",
                     projectPath);
             }
 
@@ -390,7 +390,7 @@ namespace Microsoft.Framework.Runtime
                     else
                     {
                         throw FileFormatException.Create(
-                            "Unrecoganizable format of dependency version of " + dependencyKey,
+                            string.Format("Invalid dependency version: {0}. The format is not recognizable.", dependencyKey),
                             dependencyValue,
                             projectPath);
                     }

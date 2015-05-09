@@ -46,7 +46,7 @@ namespace Microsoft.Framework.Runtime
 
                     if (jobject == null)
                     {
-                        throw new InvalidOperationException("The json file can't be deserialized to a Json object.");
+                        throw new InvalidOperationException("The JSON file can't be deserialized to a JSON object.");
                     }
 
                     var projectSearchPaths = jobject.ValueAsStringArray("projects") ??

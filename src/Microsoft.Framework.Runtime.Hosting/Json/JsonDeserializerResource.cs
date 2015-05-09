@@ -90,7 +90,7 @@ namespace Microsoft.Framework.Runtime.Json
 
         internal static string JSON_InvalidEnd
         {
-            get { return "Invalid JSON end unexpectedly."; }
+            get { return "Invalid JSON. Unexpected end of file."; }
         }
     }
 }

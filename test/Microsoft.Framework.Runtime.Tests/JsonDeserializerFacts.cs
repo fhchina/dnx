@@ -107,7 +107,7 @@ namespace Microsoft.Framework.Runtime.Tests
         public void DeserializeSimpleObject()
         {
             // Do not format the following 12 lines. The position of every charactor position in the
-            // json sample is referenced in following test.
+            // JSON sample is referenced in following test.
             var content = @"
             {
                 ""key1"": ""value1"",
